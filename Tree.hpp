@@ -24,7 +24,7 @@ namespace ariel{
 	int size();
 	int root();
 	bool contains(int x);
-	bool remove(int x);
+	void remove(int x);
 	~Tree();
 	};
 }

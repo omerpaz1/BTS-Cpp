@@ -67,17 +67,33 @@ int ariel::Tree::root()
 			return true ;
 	}
 
-	bool Tree::remove(int x)
+	void Tree::remove(int x)
 	{
-		if((Tree::contains(x) == false) || (myroot==NULL)){
-			throw::invalid_argument("BAD");
-			return false;
-		}else{
-		Node* temp = fun::remove(myroot,x);
-	return true;
-	
+	    Node *removeNode = fun::find(myroot, x);
+
+    if (removeNode == NULL)
+    {
+        throw std::invalid_argument("the number isn't exist ");
+    }
+
+    Node *temp = fun::remove(myroot,x);
+
+    if (removeNode == myroot)
+    {
+        myroot = temp;
+    }
+    if (temp == NULL)
+    {
+        myroot = NULL;
+    }
 	}
-}
+
+
+
+
+
+
+
 
                                         ////// end public methods ///////
 
@@ -115,37 +131,47 @@ int ariel::Tree::root()
         return NULL;
     }
  Node* fun::remove(Node* myroot, int data) {
-	if(myroot == NULL) return myroot; 
-	else if(data < myroot->data) myroot->left = fun::remove(myroot->left,data);
-	else if (data > myroot->data) myroot->right = fun::remove(myroot->right,data);
-	// Wohoo... I found you, Get ready to be deleted	
-	else {
-		// Case 1:  No child
-		if(myroot->left == NULL && myroot->right == NULL) { 
-			delete myroot;
-			myroot = NULL;
+	if (myroot == NULL)
+        return myroot;
+
+    if (data < myroot->data){
+
+		Node* temp=fun::remove(myroot->left, data);
+        myroot->left =temp;
 		}
-		//Case 2: One child 
-		else if(myroot->left == NULL) {
-			struct Node *temp = myroot;
-			myroot = myroot->right;
-			delete temp;
-		
-		}
-		else if(myroot->right == NULL) {
-			struct Node *temp = myroot;
-			myroot = myroot->left;
-			delete temp;
-		}
-		// case 3: 2 children
-		else { 
-			struct Node *temp = fun::findMin(myroot->right);
-			myroot->data = temp->data;
-			myroot->right = fun::remove(myroot->right,temp->data);
-		}
-	}
-	return myroot;
+   
+    else if (data > myroot->data)
+		{
+
+			Node* temp=fun::remove(myroot->right, data);
+        myroot->right=temp;
+}else
+    {
+      
+        if (myroot->left == NULL)
+        {
+            Node *temp = myroot->right;
+            delete myroot;
+            return temp;
+        }
+        else if (myroot->right== NULL)
+        {
+            Node *temp = myroot->left;
+            
+            delete myroot;
+            return temp;
+        }
+        Node *temp = fun::findMin(myroot->right);
+
+      
+        myroot->data=(temp->data);
+
+        // Delete the inorder successor
+        myroot->right=(fun::remove(myroot->right, temp->data));
+    }
+    return myroot;
 }
+
 
 Node* fun::findMin(Node* t)
 {

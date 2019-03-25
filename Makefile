@@ -3,7 +3,7 @@
 demo: TreeDemo.o Tree.o
 	clang++-5.0 -std=c++17 $^ -o demo
 
-test: efratTests.o Tree.o
+test: TreeTest.o Tree.o
 	clang++-5.0 -std=c++17 $^ -o test
 
 %.o: %.cpp
