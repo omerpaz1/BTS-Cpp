@@ -50,9 +50,14 @@ using namespace ariel;
 		}
 	}
 
-	int Tree::root(){
-		return myroot->data;
-	}
+int ariel::Tree::root()
+
+{
+    if (myroot == NULL)
+        throw std::invalid_argument("the root is not exist");
+
+    return myroot->data;
+}
 
 	bool Tree::contains(int x)
 	{
@@ -194,40 +199,28 @@ Node* fun::parent(Node* myroot, int n) {
 }
 int fun::left(int x ,Node* myroot){
 
-    if(x == myroot->data){
-       if(myroot->left == NULL){
-		   throw::invalid_argument("No left chlid exist");
-       }
-           else {
-           return myroot->left->data;
-         }
-    }
-    if(x < myroot->data){
-        fun::left(x,myroot->left);
-    }
-    else if(x > myroot->data){
-        fun::left(x,myroot->right);
-    }
+	Node* temp = fun::find(myroot,x);
+
+	if(temp == NULL || temp->left == NULL){
+		throw invalid_argument("left child not exist");
+	} 
+	else{
+		return temp->left->data;
+	}
+
 }
 
 int fun::right(int x ,Node* myroot){
 
-    if(x == myroot->data){
-       if(myroot->right == NULL){
-		   throw::invalid_argument("No right chlid exist");
-       }
-        else {
-			cout << "ans is: " <<myroot->right->data << endl;
-           return myroot->right->data;
-         }
-    }
-    if(x < myroot->data){
-		cout << "the left is: " << myroot->left->data << endl;
-        fun::right(x,myroot->left);
-    }
-    else if(x > myroot->data){
-        fun::right(x,myroot->right);
-    }
+	Node* temp = fun::find(myroot,x);
+
+	if(temp == NULL || temp->right == NULL){
+		throw invalid_argument("right child not exist");
+	} 
+	else{
+		return temp->right->data;
+	}
+
 }
 
 int fun::size(Node* myroot)  
