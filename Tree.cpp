@@ -209,7 +209,8 @@ Node* fun::parent(Node* myroot, int n) {
 	if (myroot == NULL){
 		return NULL;
 	}
-	else if ( (myroot->left!=NULL && myroot->left->data == n) || (myroot->right!=NULL) && (myroot->right->data == n)){
+	else if ( (myroot->left!=NULL && myroot->left->data == n) || ((myroot->right!=NULL) && (myroot->right->data == n)))
+	{
 			return myroot;
 		}
 		else {
